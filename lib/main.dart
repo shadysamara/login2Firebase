@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:login2_firebase/auth_helper.dart';
+import 'package:login2_firebase/login_user_model.dart';
 
 void main() {
   runApp(MaterialApp(home: App()));
@@ -45,9 +46,16 @@ class _AppState extends State<App> {
                     child: RaisedButton(
                       child: Text('auth'),
                       onPressed: () {
+                        LoginUser loginUser = LoginUser(
+                            address: 'gaza',
+                            age: 8,
+                            email: 'omar2@gmail.com',
+                            isMale: true,
+                            password: '1234567890');
+                        AuthHelper.authHelper.saveUserInFirestore(loginUser);
                         // AuthHelper.authHelper.logout();
-                        // AuthHelper.authHelper.sendVerificationEmail();
-                        print(FirebaseAuth.instance.currentUser.emailVerified);
+                        // AuthHelper.authHelper.saveUserInFirestore();
+                        // print(FirebaseAuth.instance.currentUser.emailVerified);
                         // isLoading =
                         // AuthHelper.authHelper
                         //     .login('shady.samara@gmail.com', '1234567');

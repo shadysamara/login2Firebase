@@ -1,14 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:login2_firebase/login_user_model.dart';
 
 class AuthHelper {
   AuthHelper._();
   static AuthHelper authHelper = AuthHelper._();
   FirebaseAuth auth = FirebaseAuth.instance;
-  register(String email, String password) async {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final String usersCollectionName = 'Users';
+
+  register(LoginUser loginUser) async {
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      print(userCredential.user.uid);
+          email: loginUser.email, password: loginUser.password);
+      String id = userCredential.user.uid;
+      loginUser.id = id;
+      saveUserInFirestore(loginUser);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -45,5 +52,14 @@ class AuthHelper {
     await auth.sendPasswordResetEmail(email: email);
   }
 
-  Future<bool> checkUser() async {}
+  saveUserInFirestore(LoginUser loginUser) async {
+    try {
+      firestore
+          .collection(usersCollectionName)
+          .doc(auth.currentUser.uid)
+          .set({'age': 9});
+    } on Exception catch (e) {
+      print('error is $e');
+    }
+  }
 }
