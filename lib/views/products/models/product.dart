@@ -21,6 +21,16 @@ class Product {
       this.isFavourite = false,
       this.imageUrl,
       this.file});
+  Product.fromJson(Map map) {
+    this.descriptionAr = map['descriptionAr'];
+    this.descriptionEn = map['descriptionEn'];
+    this.nameAr = map['nameAr'];
+    this.nameEn = map['nameEn'];
+    this.price = map['price'];
+    this.isFavourite = map['isFavourite'];
+    this.imageUrl = map['imageUrl'];
+    this.id = map['id'];
+  }
   toMap() {
     return {
       'nameAr': this.nameAr,

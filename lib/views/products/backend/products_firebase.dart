@@ -28,7 +28,19 @@ class ProductsFirebaseHelper {
     return imageUrl;
   }
 
-  Future<List<Product>> getAllProducts() async {}
+  Future<List<Product>> getAllProducts() async {
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await firestore.collection(usersCollectionName).get();
+    List<QueryDocumentSnapshot<Map<String, dynamic>>> documents =
+        querySnapshot.docs;
+    documents.map((e) {
+      String id = e.id;
+      Map map = e.data();
+      map['id'] = id;
+      Product.fromJson(map);
+    });
+  }
+
   editProduct(String id) async {}
   deleteProduct(String id) async {}
 }
