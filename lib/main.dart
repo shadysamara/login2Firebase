@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:login2_firebase/auth_helper.dart';
 import 'package:login2_firebase/login_user_model.dart';
+import 'package:login2_firebase/views/products/backend/products_firebase.dart';
+import 'package:login2_firebase/views/products/models/product.dart';
 
 void main() {
   runApp(MaterialApp(home: App()));
@@ -45,14 +50,18 @@ class _AppState extends State<App> {
                   child: Center(
                     child: RaisedButton(
                       child: Text('auth'),
-                      onPressed: () {
-                        LoginUser loginUser = LoginUser(
-                            address: 'gaza',
-                            age: 8,
-                            email: 'omar2@gmail.com',
-                            isMale: true,
-                            password: '1234567890');
-                        AuthHelper.authHelper.saveUserInFirestore(loginUser);
+                      onPressed: () async {
+                        PickedFile pickedFile = await ImagePicker()
+                            .getImage(source: ImageSource.camera);
+                        File file = File(pickedFile.path);
+                        Product product = Product(
+                            descriptionAr: 'وصف',
+                            descriptionEn: 'description',
+                            file: file,
+                            nameAr: 'اسم',
+                            nameEn: 'name',
+                            price: 50.2);
+                        ProductsFirebaseHelper.helper.addProduct(product);
                         // AuthHelper.authHelper.logout();
                         // AuthHelper.authHelper.saveUserInFirestore();
                         // print(FirebaseAuth.instance.currentUser.emailVerified);

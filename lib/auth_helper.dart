@@ -57,7 +57,7 @@ class AuthHelper {
       firestore
           .collection(usersCollectionName)
           .doc(auth.currentUser.uid)
-          .set({'age': 9});
+          .update({'age': 9});
     } on Exception catch (e) {
       print('error is $e');
     }
