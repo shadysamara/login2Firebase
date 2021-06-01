@@ -33,14 +33,23 @@ class ProductsFirebaseHelper {
         await firestore.collection(usersCollectionName).get();
     List<QueryDocumentSnapshot<Map<String, dynamic>>> documents =
         querySnapshot.docs;
-    documents.map((e) {
-      String id = e.id;
-      Map map = e.data();
-      map['id'] = id;
-      Product.fromJson(map);
-    });
+    print(documents.first.data());
+    // documents.map((e) {
+    //   String id = e.id;
+    //   Map map = e.data();
+    //   map['id'] = id;
+    //   Product.fromJson(map);
+    // });
   }
 
-  editProduct(String id) async {}
-  deleteProduct(String id) async {}
+  editProduct(Product product) async {
+    firestore
+        .collection(usersCollectionName)
+        .doc(product.id)
+        .update(product.toMap());
+  }
+
+  deleteProduct(Product product) async {
+    firestore.collection(usersCollectionName).doc(product.id).delete();
+  }
 }

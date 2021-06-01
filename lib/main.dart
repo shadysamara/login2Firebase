@@ -51,17 +51,18 @@ class _AppState extends State<App> {
                     child: RaisedButton(
                       child: Text('auth'),
                       onPressed: () async {
-                        PickedFile pickedFile = await ImagePicker()
-                            .getImage(source: ImageSource.camera);
-                        File file = File(pickedFile.path);
-                        Product product = Product(
-                            descriptionAr: 'وصف',
-                            descriptionEn: 'description',
-                            file: file,
-                            nameAr: 'اسم',
-                            nameEn: 'name',
-                            price: 50.2);
-                        ProductsFirebaseHelper.helper.addProduct(product);
+                        ProductsFirebaseHelper.helper.getAllProducts();
+                        // PickedFile pickedFile = await ImagePicker()
+                        //     .getImage(source: ImageSource.camera);
+                        // File file = File(pickedFile.path);
+                        // Product product = Product(
+                        //     descriptionAr: 'وصف',
+                        //     descriptionEn: 'description',
+                        //     file: file,
+                        //     nameAr: 'اسم',
+                        //     nameEn: 'name',
+                        //     price: 50.2);
+                        // ProductsFirebaseHelper.helper.addProduct(product);
                         // AuthHelper.authHelper.logout();
                         // AuthHelper.authHelper.saveUserInFirestore();
                         // print(FirebaseAuth.instance.currentUser.emailVerified);
